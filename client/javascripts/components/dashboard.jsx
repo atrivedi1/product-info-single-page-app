@@ -24,7 +24,7 @@ const Dashboard = React.createClass({
 function mapStateToProps(state) {
   return {
     //placeholder
-    productInfo: state.productInfo.get('productPictures'),
+    // productInfo: state.productInfo.get('productPictures'),
   }
 }
 
