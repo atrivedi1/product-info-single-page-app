@@ -1,6 +1,5 @@
 const React = require('react')
 const { connect } = require('react-redux')
-
 const Dashboard = require('./dashboard')
 
 const AppContainer = React.createClass({

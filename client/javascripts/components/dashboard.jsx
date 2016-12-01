@@ -1,10 +1,19 @@
 const React = require('react')
 const { connect } = require('react-redux')
-
 const { fetchProductData } = require('../actions/dashboard')
 
 const Dashboard = React.createClass({
   render() {
+
+    let productImages = this.props.products.map((productObj, i) => {
+      return (
+        <div key={ i }>
+          <div>{productObj.name}</div>
+          <img src={ 'http:' + productObj.mainImage.ref } />
+        </div>
+      )
+    })
+
     return (
       <div>
         <div className="fetch_products_button_container">
@@ -16,6 +25,10 @@ const Dashboard = React.createClass({
           </button>
         </div >
 
+        <div>
+          { productImages }
+        </div>
+
       </div>
     )
   }
@@ -23,8 +36,11 @@ const Dashboard = React.createClass({
 
 function mapStateToProps(state) {
   return {
-    //placeholder
-    // productInfo: state.productInfo.get('productPictures'),
+    pageTitle: state.dashboard.get('pageTitle'),
+    extraInfo: state.dashboard.get('extraInfo'),
+    displayName: state.dashboard.get('displayName'),
+    bannerImage: state.dashboard.get('bannerImage'),
+    products: state.dashboard.get('productList')
   }
 }
 
