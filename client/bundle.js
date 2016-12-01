@@ -50535,7 +50535,7 @@
 	        React.createElement(
 	          'div',
 	          null,
-	          productObj.name
+	          productObj.name + ", $" + productObj.defaultPriceInCents / 100
 	        ),
 	        React.createElement('img', { src: 'http:' + productObj.mainImage.ref })
 	      );
