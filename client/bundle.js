@@ -50492,7 +50492,6 @@
 	
 	var connect = _require.connect;
 	
-	
 	var Dashboard = __webpack_require__(/*! ./dashboard */ 202);
 	
 	var AppContainer = React.createClass({
@@ -50529,6 +50528,19 @@
 	  render: function render() {
 	    var _this = this;
 	
+	    var productImages = this.props.products.map(function (productObj, i) {
+	      return React.createElement(
+	        'div',
+	        { key: i },
+	        React.createElement(
+	          'div',
+	          null,
+	          productObj.name
+	        ),
+	        React.createElement('img', { src: 'http:' + productObj.mainImage.ref })
+	      );
+	    });
+	
 	    return React.createElement(
 	      'div',
 	      null,
@@ -50544,6 +50556,11 @@
 	            } },
 	          'Reset Product Page'
 	        )
+	      ),
+	      React.createElement(
+	        'div',
+	        null,
+	        productImages
 	      )
 	    );
 	  }
@@ -50551,8 +50568,11 @@
 	
 	function mapStateToProps(state) {
 	  return {
-	    //placeholder
-	    // productInfo: state.productInfo.get('productPictures'),
+	    pageTitle: state.dashboard.get('pageTitle'),
+	    extraInfo: state.dashboard.get('extraInfo'),
+	    displayName: state.dashboard.get('displayName'),
+	    bannerImage: state.dashboard.get('bannerImage'),
+	    products: state.dashboard.get('productList')
 	  };
 	}
 	
@@ -56734,7 +56754,11 @@
 	var Immutable = __webpack_require__(/*! immutable */ 273);
 	
 	var initialDashboardState = Immutable.fromJS({
-	  productInfo: []
+	  pageTitle: null,
+	  extraInfo: null,
+	  displayName: null,
+	  bannerImage: null,
+	  productList: []
 	});
 	
 	function DashboardReducer(state, action) {
@@ -56747,17 +56771,21 @@
 	  switch (action.get('type')) {
 	    case "PRODUCT_DATA_RETRIEVED":
 	      {
+	
 	        //product information
-	        console.log("action:", action);
+	        var pageTitle = action.getIn(['productData', 'productInfo', 'pageTitle']);
+	        //      console.log("page title --->", pageTitle);
+	        var extraInfo = action.getIn(['productData', 'productInfo', 'extraInfo']);
+	        //     console.log("extra info --->", extraInfo);
+	        var displayName = action.getIn(['productData', 'productInfo', 'displayName']);
+	        //     console.log("display name --->", displayName)
+	        var bannerImage = action.getIn(['productData', 'productInfo', 'bannerImage']).toJS();
+	        //     console.log("banner image --->", bannerImage);
+	        var products = action.getIn(['productData', 'productInfo', 'products']).toJS();
+	        console.log("products --->", products);
 	
 	        //update state
-	
-	        /*return state
-	          .setIn(['carInformation','vehicleInfo'], vehicleInfo)
-	          .setIn(['carInformation','securityInfo'], securityInfo)
-	          .setIn(['carInformation','fuelRange'], fuelRange)
-	          .setIn(['carInformation','batteryRange'], batteryRange)
-	          .set('displayEngineInfo', true)*/
+	        return state.set('pageTitle', pageTitle).set('extraInfo', extraInfo).set('displayName', displayName).set('bannerImage', bannerImage).set('productList', products);
 	      }
 	
 	    default:

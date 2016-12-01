@@ -1,7 +1,11 @@
 const Immutable = require('immutable')
 
 const initialDashboardState = Immutable.fromJS({
-  productInfo: [],
+  pageTitle: null,
+  extraInfo: null,
+  displayName: null,
+  bannerImage: null,
+  productList: [],
 })
 
 function DashboardReducer(state, action) {
@@ -13,17 +17,27 @@ function DashboardReducer(state, action) {
 
   switch (action.get('type')) {
     case "PRODUCT_DATA_RETRIEVED": {
+
       //product information
-        console.log("action:", action)
+      let pageTitle = action.getIn(['productData', 'productInfo', 'pageTitle'])
+//      console.log("page title --->", pageTitle);
+      let extraInfo = action.getIn(['productData', 'productInfo', 'extraInfo'])
+ //     console.log("extra info --->", extraInfo);
+      let displayName = action.getIn(['productData', 'productInfo', 'displayName'])
+ //     console.log("display name --->", displayName)
+      let bannerImage = action.getIn(['productData', 'productInfo', 'bannerImage']).toJS()
+ //     console.log("banner image --->", bannerImage);
+      let products = action.getIn(['productData', 'productInfo', 'products']).toJS()
+     console.log("products --->", products)
+
 
       //update state
-
-      /*return state
-        .setIn(['carInformation','vehicleInfo'], vehicleInfo)
-        .setIn(['carInformation','securityInfo'], securityInfo)
-        .setIn(['carInformation','fuelRange'], fuelRange)
-        .setIn(['carInformation','batteryRange'], batteryRange)
-        .set('displayEngineInfo', true)*/
+      return state
+        .set('pageTitle', pageTitle)
+        .set('extraInfo', extraInfo)
+        .set('displayName', displayName)
+        .set('bannerImage', bannerImage)
+        .set('productList', products)
     }
 
     default: {
