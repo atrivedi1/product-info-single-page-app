@@ -8,7 +8,7 @@ const Dashboard = React.createClass({
     let productImages = this.props.products.map((productObj, i) => {
       return (
         <div key={ i }>
-          <div>{productObj.name}</div>
+          <div>{ productObj.name + ", $" + productObj.defaultPriceInCents/100 }</div>
           <img src={ 'http:' + productObj.mainImage.ref } />
         </div>
       )
