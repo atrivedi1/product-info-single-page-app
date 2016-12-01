@@ -50525,8 +50525,10 @@
 	
 	var Dashboard = React.createClass({
 	  displayName: 'Dashboard',
+	  componentWillMount: function componentWillMount() {
+	    this.props.fetchProductData();
+	  },
 	  render: function render() {
-	    var _this = this;
 	
 	    var productImages = this.props.products.map(function (productObj, i) {
 	      return React.createElement(
@@ -50544,19 +50546,6 @@
 	    return React.createElement(
 	      'div',
 	      null,
-	      React.createElement(
-	        'div',
-	        { className: 'fetch_products_button_container' },
-	        React.createElement(
-	          'button',
-	          {
-	            className: 'button_fetch_products',
-	            onClick: function onClick() {
-	              _this.props.fetchProductData();
-	            } },
-	          'Reset Product Page'
-	        )
-	      ),
 	      React.createElement(
 	        'div',
 	        null,

@@ -3,6 +3,10 @@ const { connect } = require('react-redux')
 const { fetchProductData } = require('../actions/dashboard')
 
 const Dashboard = React.createClass({
+  componentWillMount() {
+    this.props.fetchProductData()
+  },
+
   render() {
 
     let productImages = this.props.products.map((productObj, i) => {
@@ -16,14 +20,6 @@ const Dashboard = React.createClass({
 
     return (
       <div>
-        <div className="fetch_products_button_container">
-          <button
-            className="button_fetch_products"
-            onClick={ () => {
-              this.props.fetchProductData() } }>
-             Reset Product Page
-          </button>
-        </div >
 
         <div>
           { productImages }
