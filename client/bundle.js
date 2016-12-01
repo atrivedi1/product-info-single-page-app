@@ -50521,7 +50521,7 @@
 	
 	var _require2 = __webpack_require__(/*! ../actions/dashboard */ 203);
 	
-	var fetchProductData = _require2.fetchProductData;
+	var _fetchProductData = _require2.fetchProductData;
 	
 	
 	var Dashboard = React.createClass({
@@ -50563,7 +50563,7 @@
 	        args[_key] = arguments[_key];
 	      }
 	
-	      return fetchCarData.apply(undefined, [dispatch].concat(args));
+	      return _fetchProductData.apply(undefined, [dispatch].concat(args));
 	    }
 	  };
 	}
@@ -50582,7 +50582,6 @@
 	var baseUrl = 'http://localhost:3000';
 	
 	function fetchProductData(dispatch) {
-	
 	  $.ajax({
 	    type: 'GET',
 	    url: baseUrl + '/products',
@@ -56749,7 +56748,7 @@
 	    case "PRODUCT_DATA_RETRIEVED":
 	      {
 	        //product information
-	        console.log(action);
+	        console.log("action:", action);
 	
 	        //update state
 	

@@ -14,7 +14,7 @@ function DashboardReducer(state, action) {
   switch (action.get('type')) {
     case "PRODUCT_DATA_RETRIEVED": {
       //product information
-        console.log(action)
+        console.log("action:", action)
 
       //update state
 

@@ -12,13 +12,14 @@ const requestOptions = {
 }
 
 module.exports = {
+  //added callback to function in case we want to do unit testing down the line
   getProductInfo: function(req, res, cb) {
 
     requestPromise(requestOptions)
       .then((productInfo) => {
-        console.log(product)
+        console.log("product info -->", productInfo)
 
-        res.status(200).json(cleanedUpVehicleInfo)
+        res.status(200).json(productInfo)
         cb()
       })
       .catch((err) => res.status(500).send("Uh oh! We're having data issues"))
