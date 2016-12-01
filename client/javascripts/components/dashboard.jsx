@@ -30,7 +30,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToActions(dispatch) {
   return {
-    fetchProductData: (...args) => fetchCarData(dispatch, ...args)
+    fetchProductData: (...args) => fetchProductData(dispatch, ...args)
   }
 }
 

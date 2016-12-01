@@ -1,7 +1,6 @@
 const baseUrl = 'http://localhost:3000'
 
 function fetchProductData(dispatch) {
-
   $.ajax({
       type: 'GET',
       url: baseUrl + '/products',
