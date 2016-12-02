@@ -50564,6 +50564,7 @@
 	  }, {
 	    key: 'filterProducts',
 	    value: function filterProducts(filterVal) {
+	
 	      var filteredProducts = this.props.products.filter(function (productObj) {
 	        return productObj.defaultPriceInCents / 100 <= filterVal;
 	      });
@@ -50573,6 +50574,7 @@
 	  }, {
 	    key: 'removeFilter',
 	    value: function removeFilter() {
+	      this.setState({ inputValueInFilterField: "" });
 	      this.setState({ valueToFilterOn: "N/A" });
 	    }
 	  }, {
@@ -50582,15 +50584,24 @@
 	      var productList = filterVal !== "N/A" ? this.filterProducts(filterVal) : this.props.products;
 	
 	      var renderedProducts = productList.map(function (productObj, i) {
+	
 	        return React.createElement(
 	          'div',
-	          { key: i },
+	          { className: 'product_information_container', key: i },
 	          React.createElement(
 	            'div',
-	            null,
-	            productObj.name + ", $" + productObj.defaultPriceInCents / 100
-	          ),
-	          React.createElement('img', { src: 'http:' + productObj.mainImage.ref })
+	            { className: 'product_information_card' },
+	            React.createElement(
+	              'div',
+	              { className: 'product_description' },
+	              productObj.name + ":  $" + productObj.defaultPriceInCents / 100
+	            ),
+	            React.createElement(
+	              'div',
+	              { className: 'product_image_container' },
+	              React.createElement('img', { className: 'product_image', src: 'http:' + productObj.mainImage.ref })
+	            )
+	          )
 	        );
 	      });
 	
@@ -50606,7 +50617,7 @@
 	        null,
 	        React.createElement(
 	          'div',
-	          null,
+	          { className: 'action_container' },
 	          React.createElement(
 	            'form',
 	            { onSubmit: function onSubmit(e) {
@@ -50614,9 +50625,10 @@
 	              } },
 	            React.createElement(
 	              'label',
-	              null,
+	              { className: 'input_field_label' },
 	              'Filter by Amount:',
 	              React.createElement('input', {
+	                className: 'input_field',
 	                type: 'text',
 	                placeholder: 'e.g. 10',
 	                value: this.state.inputValueInFilterField,
@@ -50625,11 +50637,12 @@
 	                }
 	              })
 	            ),
-	            React.createElement('input', { type: 'submit', value: 'Filter' })
+	            React.createElement('input', { className: 'filter_button', type: 'submit', value: 'Filter' })
 	          ),
 	          React.createElement(
 	            'button',
 	            {
+	              className: 'show_all_button',
 	              onClick: function onClick() {
 	                _this2.removeFilter();
 	              } },
@@ -56860,8 +56873,6 @@
 	        var displayName = action.getIn(['productData', 'productInfo', 'displayName']);
 	        var bannerImage = action.getIn(['productData', 'productInfo', 'bannerImage']).toJS();
 	        var products = action.getIn(['productData', 'productInfo', 'products']).toJS();
-	        //console.log("products --->", products)
-	
 	
 	        //update state
 	        return state.set('pageTitle', pageTitle).set('extraInfo', extraInfo).set('displayName', displayName).set('bannerImage', bannerImage).set('productList', products);
