@@ -10,7 +10,6 @@ const app = express()
 let buildPath = path.join(__dirname, '../../client')
 
 //set up middleware, including buildPath
-app.use(bodyParser.urlencoded({ limit: '1gb', extended: true }))
 app.use(bodyParser.json())
 app.use(express.static(buildPath))
 

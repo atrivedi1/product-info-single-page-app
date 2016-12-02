@@ -24,8 +24,6 @@ function DashboardReducer(state, action) {
       let displayName = action.getIn(['productData', 'productInfo', 'displayName'])
       let bannerImage = action.getIn(['productData', 'productInfo', 'bannerImage']).toJS()
       let products = action.getIn(['productData', 'productInfo', 'products']).toJS()
-      //console.log("products --->", products)
-
 
       //update state
       return state

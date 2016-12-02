@@ -6,6 +6,7 @@ class Dashboard extends React.Component {
 
   constructor(props) {
     super(props)
+
     this.state = {
       inputValueInFilterField: "",
       valueToFilterOn: "N/A"
@@ -26,6 +27,7 @@ class Dashboard extends React.Component {
   }
 
   filterProducts(filterVal) {
+
     let filteredProducts = this.props.products.filter((productObj) => {
         return productObj.defaultPriceInCents/100 <= filterVal
     })
@@ -34,6 +36,7 @@ class Dashboard extends React.Component {
   }
 
   removeFilter() {
+    this.setState({ inputValueInFilterField: "" })
     this.setState({ valueToFilterOn: "N/A" })
   }
 
@@ -42,10 +45,21 @@ class Dashboard extends React.Component {
     let productList = filterVal !== "N/A" ? this.filterProducts(filterVal) : this.props.products
 
     let renderedProducts = productList.map((productObj, i) => {
+
       return (
-        <div key={ i }>
-          <div>{ productObj.name + ", $" + productObj.defaultPriceInCents/100 }</div>
-          <img src={ 'http:' + productObj.mainImage.ref } />
+
+        <div className="product_information_container" key={ i }>
+
+          <div className="product_information_card">
+
+            <div className="product_description">
+              { productObj.name + ":  $" + productObj.defaultPriceInCents/100 }
+            </div>
+
+            <div className="product_image_container">
+              <img className="product_image" src={ 'http:' + productObj.mainImage.ref } />
+            </div>
+          </div>
         </div>
       )
     })
@@ -57,21 +71,25 @@ class Dashboard extends React.Component {
 
     return (
       <div>
-        <div>
+
+        <div className="action_container">
+
           <form onSubmit={ (e) => this.setFilterValue(e) }>
-            <label>
+            <label className="input_field_label">
               Filter by Amount:
               <input
+                className="input_field"
                 type="text"
                 placeholder="e.g. 10"
                 value={ this.state.inputValueInFilterField }
                 onChange={ (e) => this.updateValueInFilterField(e) }
               />
             </label>
-            <input type="submit" value="Filter" />
+            <input className="filter_button" type="submit" value="Filter" />
           </form>
 
           <button
+            className="show_all_button"
             onClick={ () => { this.removeFilter() } }>
             Show All Products
           </button>
@@ -80,7 +98,6 @@ class Dashboard extends React.Component {
         <div>
           { this.renderProductList() }
         </div>
-
       </div>
     )
   }
