@@ -50512,6 +50512,14 @@
 
 	'use strict';
 	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
 	var React = __webpack_require__(/*! react */ 1);
 	
 	var _require = __webpack_require__(/*! react-redux */ 178);
@@ -50522,38 +50530,123 @@
 	
 	var _fetchProductData = _require2.fetchProductData;
 	
+	var Dashboard = function (_React$Component) {
+	  _inherits(Dashboard, _React$Component);
 	
-	var Dashboard = React.createClass({
-	  displayName: 'Dashboard',
-	  componentWillMount: function componentWillMount() {
-	    this.props.fetchProductData();
-	  },
-	  render: function render() {
+	  function Dashboard(props) {
+	    _classCallCheck(this, Dashboard);
 	
-	    var productImages = this.props.products.map(function (productObj, i) {
+	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Dashboard).call(this, props));
+	
+	    _this.state = {
+	      inputValueInFilterField: "",
+	      valueToFilterOn: "N/A"
+	    };
+	    return _this;
+	  }
+	
+	  _createClass(Dashboard, [{
+	    key: 'componentWillMount',
+	    value: function componentWillMount() {
+	      this.props.fetchProductData();
+	    }
+	  }, {
+	    key: 'updateValueInFilterField',
+	    value: function updateValueInFilterField(event) {
+	      this.setState({ inputValueInFilterField: event.target.value });
+	    }
+	  }, {
+	    key: 'setFilterValue',
+	    value: function setFilterValue(event) {
+	      this.setState({ valueToFilterOn: this.state.inputValueInFilterField });
+	      event.preventDefault();
+	    }
+	  }, {
+	    key: 'filterProducts',
+	    value: function filterProducts(filterVal) {
+	      var filteredProducts = this.props.products.filter(function (productObj) {
+	        return productObj.defaultPriceInCents / 100 <= filterVal;
+	      });
+	
+	      return filteredProducts;
+	    }
+	  }, {
+	    key: 'removeFilter',
+	    value: function removeFilter() {
+	      this.setState({ valueToFilterOn: "N/A" });
+	    }
+	  }, {
+	    key: 'renderProductList',
+	    value: function renderProductList() {
+	      var filterVal = this.state.valueToFilterOn;
+	      var productList = filterVal !== "N/A" ? this.filterProducts(filterVal) : this.props.products;
+	
+	      var renderedProducts = productList.map(function (productObj, i) {
+	        return React.createElement(
+	          'div',
+	          { key: i },
+	          React.createElement(
+	            'div',
+	            null,
+	            productObj.name + ", $" + productObj.defaultPriceInCents / 100
+	          ),
+	          React.createElement('img', { src: 'http:' + productObj.mainImage.ref })
+	        );
+	      });
+	
+	      return renderedProducts;
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this2 = this;
+	
 	      return React.createElement(
 	        'div',
-	        { key: i },
+	        null,
 	        React.createElement(
 	          'div',
 	          null,
-	          productObj.name + ", $" + productObj.defaultPriceInCents / 100
+	          React.createElement(
+	            'form',
+	            { onSubmit: function onSubmit(e) {
+	                return _this2.setFilterValue(e);
+	              } },
+	            React.createElement(
+	              'label',
+	              null,
+	              'Filter by Amount:',
+	              React.createElement('input', {
+	                type: 'text',
+	                placeholder: 'e.g. 10',
+	                value: this.state.inputValueInFilterField,
+	                onChange: function onChange(e) {
+	                  return _this2.updateValueInFilterField(e);
+	                }
+	              })
+	            ),
+	            React.createElement('input', { type: 'submit', value: 'Filter' })
+	          ),
+	          React.createElement(
+	            'button',
+	            {
+	              onClick: function onClick() {
+	                _this2.removeFilter();
+	              } },
+	            'Show All Products'
+	          )
 	        ),
-	        React.createElement('img', { src: 'http:' + productObj.mainImage.ref })
+	        React.createElement(
+	          'div',
+	          null,
+	          this.renderProductList()
+	        )
 	      );
-	    });
+	    }
+	  }]);
 	
-	    return React.createElement(
-	      'div',
-	      null,
-	      React.createElement(
-	        'div',
-	        null,
-	        productImages
-	      )
-	    );
-	  }
-	});
+	  return Dashboard;
+	}(React.Component);
 	
 	function mapStateToProps(state) {
 	  return {
@@ -56763,15 +56856,12 @@
 	
 	        //product information
 	        var pageTitle = action.getIn(['productData', 'productInfo', 'pageTitle']);
-	        //      console.log("page title --->", pageTitle);
 	        var extraInfo = action.getIn(['productData', 'productInfo', 'extraInfo']);
-	        //     console.log("extra info --->", extraInfo);
 	        var displayName = action.getIn(['productData', 'productInfo', 'displayName']);
-	        //     console.log("display name --->", displayName)
 	        var bannerImage = action.getIn(['productData', 'productInfo', 'bannerImage']).toJS();
-	        //     console.log("banner image --->", bannerImage);
 	        var products = action.getIn(['productData', 'productInfo', 'products']).toJS();
-	        console.log("products --->", products);
+	        //console.log("products --->", products)
+	
 	
 	        //update state
 	        return state.set('pageTitle', pageTitle).set('extraInfo', extraInfo).set('displayName', displayName).set('bannerImage', bannerImage).set('productList', products);

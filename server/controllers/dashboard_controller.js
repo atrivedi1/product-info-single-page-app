@@ -1,5 +1,5 @@
 'use strict'
-//NOTE: If I had more time I would refactor to make this more DRY
+
 const requestPromise = require('request-promise')
 const baseProductUrl = 'http://sneakpeeq-sites.s3.amazonaws.com/interviews/ce/feeds/store.js'
 
@@ -17,8 +17,6 @@ module.exports = {
 
     requestPromise(requestOptions)
       .then((productInfo) => {
-        console.log("product info -->", productInfo)
-
         res.status(200).json(productInfo)
         cb()
       })
