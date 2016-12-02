@@ -20,15 +20,11 @@ function DashboardReducer(state, action) {
 
       //product information
       let pageTitle = action.getIn(['productData', 'productInfo', 'pageTitle'])
-//      console.log("page title --->", pageTitle);
       let extraInfo = action.getIn(['productData', 'productInfo', 'extraInfo'])
- //     console.log("extra info --->", extraInfo);
       let displayName = action.getIn(['productData', 'productInfo', 'displayName'])
- //     console.log("display name --->", displayName)
       let bannerImage = action.getIn(['productData', 'productInfo', 'bannerImage']).toJS()
- //     console.log("banner image --->", bannerImage);
       let products = action.getIn(['productData', 'productInfo', 'products']).toJS()
-     console.log("products --->", products)
+      //console.log("products --->", products)
 
 
       //update state
